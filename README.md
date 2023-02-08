@@ -1,1 +1,8 @@
-# backend-dashboard-vendas
+💻 backend-dashboard-vendas
+Este projeto é um 💼 painel de controle para gerenciamento de vendas 💰. Com ele, é possível visualizar e analisar dados importantes sobre o desempenho do negócio 📈, como o total de vendas, o número de clientes e a evolução das vendas ao longo do tempo 📅. Além disso, ele oferece recursos avançados de filtragem e agrupamento de dados 🔍 para ajudar na tomada de decisões estratégicas 🤔.
+
+Características
+Visualização de dados em gráficos e tabelas claras e intuitivas 📊
+Filtros avançados para personalização da análise de dados 🔧
+Integração com diversas fontes de dados, incluindo bancos de dados e planilhas 📚
+Recursos de exportação de dados para facilitar a colaboração com outros departamentos ou equipes 💼🤝
