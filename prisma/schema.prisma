@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  tag      String @default("seller")
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  Sellers    Sellers[]
+
+  @@map("users")
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String
+  cust        Int
+  price       Int
+  due_date    String
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  amount      Int
+  category_Id String
+  Client      Client[]
+  Category    Category  @relation(fields: [category_Id], references: [id])
+
+  @@map("products")
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  name       String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  stock_Id   String
+  stock      Stock     @relation(fields: [stock_Id], references: [id])
+  products   Product[]
+
+  @@map("categories")
+}
+
+model Stock {
+  id                String     @id @default(uuid())
+  entry_date        String
+  physical_location String
+  sold_quantity     Int
+  suppliers         String
+  created_at        DateTime?  @default(now())
+  updated_at        DateTime?  @default(now())
+  CashFlow          CashFlow[]
+  Category          Category[]
+
+  @@map("stocks")
+}
+
+model CashFlow {
+  id                      String    @id @default(uuid())
+  date                    String
+  balance                 Int
+  additional_informations String
+  supplier                String
+  stock_Id                String
+  created_at              DateTime? @default(now())
+  updated_at              DateTime? @default(now())
+  stock                   Stock     @relation(fields: [stock_Id], references: [id])
+  sellers                 Sellers[]
+
+  @@map("cashflows")
+}
+
+model Sellers {
+  id          String  @id @default(uuid())
+  name        String
+  sale        Int
+  cashFlow_Id String?
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  Client   Client[]
+  CashFlow CashFlow? @relation(fields: [cashFlow_Id], references: [id])
+  User     User      @relation(fields: [user_Id], references: [id])
+  user_Id  String
+
+  @@map("sellers")
+}
+
+model Client {
+  id                      String    @id @default(uuid())
+  kind_payment            String
+  transaction_description String
+  date_sale               String
+  product_Id              String
+  sellers_Id              String
+  created_at              DateTime? @default(now())
+  updated_at              DateTime? @default(now())
+  products                Product   @relation(fields: [product_Id], references: [id])
+  seller                  Sellers   @relation(fields: [sellers_Id], references: [id])
+
+  @@map("clients")
+}
