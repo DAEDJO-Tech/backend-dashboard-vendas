@@ -20,96 +20,128 @@ model User {
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
-  Sellers    Sellers[]
+
+  sellers Seller[]
 
   @@map("users")
 }
 
 model Product {
-  id          String    @id @default(uuid())
-  name        String
-  cust        Int
-  price       Int
-  due_date    String
-  created_at  DateTime? @default(now())
-  updated_at  DateTime? @default(now())
-  amount      Int
-  category_Id String
-  Client      Client[]
-  Category    Category  @relation(fields: [category_Id], references: [id])
+  id       String @id @default(uuid())
+  name     String
+  cust     Int
+  price    Int
+  due_date String
+  amount   Int
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  clients  Client[]
+  Category Category @relation(fields: [category_id], references: [id])
+
+  category_id String
 
   @@map("products")
 }
 
 model Category {
-  id         String    @id @default(uuid())
-  name       String
+  id   String @id @default(uuid())
+  name String
+
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
-  stock_Id   String
-  stock      Stock     @relation(fields: [stock_Id], references: [id])
-  products   Product[]
+
+  products Product[]
+  stock    Stock     @relation(fields: [stock_id], references: [id])
+
+  stock_id String
 
   @@map("categories")
 }
 
 model Stock {
-  id                String     @id @default(uuid())
+  id                String @id @default(uuid())
   entry_date        String
   physical_location String
   sold_quantity     Int
-  suppliers         String
-  created_at        DateTime?  @default(now())
-  updated_at        DateTime?  @default(now())
-  CashFlow          CashFlow[]
-  Category          Category[]
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  suppliers  Supplier[]
+  cashFlows  CashFlow[]
+  categories Category[]
 
   @@map("stocks")
 }
 
 model CashFlow {
-  id                      String    @id @default(uuid())
+  id                      String @id @default(uuid())
   date                    String
   balance                 Int
   additional_informations String
   supplier                String
-  stock_Id                String
-  created_at              DateTime? @default(now())
-  updated_at              DateTime? @default(now())
-  stock                   Stock     @relation(fields: [stock_Id], references: [id])
-  sellers                 Sellers[]
-
-  @@map("cashflows")
-}
-
-model Sellers {
-  id          String  @id @default(uuid())
-  name        String
-  sale        Int
-  cashFlow_Id String?
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
 
-  Client   Client[]
-  CashFlow CashFlow? @relation(fields: [cashFlow_Id], references: [id])
-  User     User      @relation(fields: [user_Id], references: [id])
-  user_Id  String
+  sellers Seller[]
+  stock   Stock    @relation(fields: [stock_id], references: [id])
+
+  stock_id String
+
+  @@map("cashflows")
+}
+
+model Seller {
+  id   String @id @default(uuid())
+  name String
+  sale Int
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  clients  Client[]
+  cashFlow CashFlow? @relation(fields: [cashFlow_id], references: [id])
+  user     User      @relation(fields: [user_id], references: [id])
+
+  user_id     String
+  cashFlow_id String?
 
   @@map("sellers")
 }
 
 model Client {
-  id                      String    @id @default(uuid())
+  id                      String @id @default(uuid())
   kind_payment            String
   transaction_description String
   date_sale               String
-  product_Id              String
-  sellers_Id              String
-  created_at              DateTime? @default(now())
-  updated_at              DateTime? @default(now())
-  products                Product   @relation(fields: [product_Id], references: [id])
-  seller                  Sellers   @relation(fields: [sellers_Id], references: [id])
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  product Product @relation(fields: [product_id], references: [id])
+  seller  Seller  @relation(fields: [sellers_id], references: [id])
+
+  product_id String
+  sellers_id String
 
   @@map("clients")
+}
+
+model Supplier {
+  id   String  @id @default(uuid())
+  name String
+  type String
+  tag  Boolean @default(true)
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  stock Stock? @relation(fields: [stock_id], references: [id])
+
+  stock_id String?
+
+  @@map("suppliers")
 }
