@@ -7,3 +7,5 @@ Visualização de dados em gráficos e tabelas claras e intuitivas 📊
 Filtros avançados para personalização da análise de dados 🔧
 Integração com diversas fontes de dados, incluindo bancos de dados e planilhas 📚
 Recursos de exportação de dados para facilitar a colaboração com outros departamentos ou equipes 💼🤝
+
+![diagramaBD](https://user-images.githubusercontent.com/50452655/217887055-81d4b8f7-68ee-4514-b31e-4f8623b30037.png)
