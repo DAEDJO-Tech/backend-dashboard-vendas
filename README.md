@@ -17,5 +17,3 @@ Recursos de exportação de dados para facilitar a colaboração com outros depa
 
 ### Categorias
 
-#### Criação: 
-![image](https://user-images.githubusercontent.com/50452655/218283964-fd74a3d7-5325-4904-8201-4a8a7063e832.png)
