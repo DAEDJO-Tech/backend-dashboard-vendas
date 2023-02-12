@@ -1,20 +1,38 @@
 import prismaClient from "../../prisma"
 
-export interface CategoryRequest {
+export interface RequestCreateCategory {
     name: string,
     stock_id: string
 }
 
 class CreateCategoryService {
-    async execute({ name, stock_id }: CategoryRequest) {
+    async execute({ name, stock_id }: RequestCreateCategory) {
+
+        if (!name || !stock_id) {
+            throw new Error("Preencha os dados!")
+        }
+
+        const lowerName = name.toLowerCase()
+
+        const CategoryAlreadyCreated = await prismaClient.category.findFirst({
+            where: {
+                AND: [
+                    { name: lowerName },
+                    { stock_id },
+                ],
+            }
+        });
+
+        if (CategoryAlreadyCreated) {
+            throw new Error("Category already created!")
+        }
 
         const category = await prismaClient.category.create({
             data: {
-                name: name,
+                name: lowerName,
                 stock_id: stock_id
             }
         })
-
         return category
     }
 }
