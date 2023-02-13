@@ -12,11 +12,12 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  email    String @unique
+  email    String  @unique
   password String
-  tag      String @default("seller")
+  tag      String  @default("seller")
+  status   Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -27,12 +28,13 @@ model User {
 }
 
 model Product {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
   cust     Int
   price    Int
   due_date String
   amount   Int
+  status   Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -46,8 +48,9 @@ model Product {
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String
+  id     String  @id @default(uuid())
+  name   String
+  status Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -61,10 +64,12 @@ model Category {
 }
 
 model Stock {
-  id                String @id @default(uuid())
+  id                String  @id @default(uuid())
+  name              String  @unique @default("Principal")
   entry_date        String
   physical_location String
   sold_quantity     Int
+  status            Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -77,11 +82,12 @@ model Stock {
 }
 
 model CashFlow {
-  id                      String @id @default(uuid())
+  id                      String  @id @default(uuid())
   date                    String
   balance                 Int
   additional_informations String
   supplier                String
+  status                  Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -95,9 +101,10 @@ model CashFlow {
 }
 
 model Seller {
-  id   String @id @default(uuid())
-  name String
-  sale Int
+  id     String  @id @default(uuid())
+  name   String
+  sale   Int
+  status Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -113,10 +120,11 @@ model Seller {
 }
 
 model Client {
-  id                      String @id @default(uuid())
+  id                      String  @id @default(uuid())
   kind_payment            String
   transaction_description String
   date_sale               String
+  status                  Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
@@ -131,10 +139,10 @@ model Client {
 }
 
 model Supplier {
-  id   String  @id @default(uuid())
-  name String
-  type String
-  tag  Boolean @default(true)
+  id     String  @id @default(uuid())
+  name   String
+  type   String
+  status Boolean @default(true)
 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
