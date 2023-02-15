@@ -24,36 +24,3 @@ class CreateStockService {
 }
 
 export { CreateStockService }
-
-// const test = await prismaClient.stock.findFirst({
-//     where: {
-//         OR: [
-//             { name: "Principal" },
-//             { id: "IDA" }
-//         ]
-//     },
-//     select: {
-//         id: true,
-//         name: true,
-//         sold_quantity: true,
-//         physical_location: true,
-//         categories: {
-//             select: {
-//                 name: true,
-//                 id: true
-//             }
-//         },
-//         suppliers: {
-//             select: {
-//                 name: true,
-//                 id: true
-//             }
-//         },
-//         cashFlows: {
-//             select: {
-//                 id: true
-//             }
-//         }
-//     }
-// })
-
