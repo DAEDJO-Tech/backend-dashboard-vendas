@@ -9,7 +9,7 @@ class CreateCategoryService {
     async execute({ name, stock_id }: RequestCreateCategory) {
 
         if (!name || !stock_id) {
-            throw new Error("Preencha os dados!")
+            throw new Error("Fill in the data!")
         }
 
         const lowerName = name.toLowerCase()
@@ -33,6 +33,7 @@ class CreateCategoryService {
                 stock_id: stock_id
             }
         })
+
         return category
     }
 }

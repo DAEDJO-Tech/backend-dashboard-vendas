@@ -1,47 +1,43 @@
 import prismaClient from "../../prisma";
 
 export interface RequestRemoveCategory {
-    id: string,
     name: string,
+    stock_id: string,
 }
 
 class RemoveCategoryService {
-    async execute({ id, name }: RequestRemoveCategory) {
+    async execute({ name, stock_id }: RequestRemoveCategory) {
 
-        if (!id && !name) {
-            throw new Error("Preencha os campos!")
+        if (!name) {
+            throw new Error("Fill in the data!")
         }
 
-        if (name) {
-            var lowerName = name.toLowerCase()
-        }
+        const lowerName = name.toLowerCase()
 
         const CategoryExisted = await prismaClient.category.findFirst({
             where: {
-                OR: [
+                AND: [
                     { name: lowerName },
-                    { id }
+                    { stock_id }
                 ]
             }
         })
 
-        if (lowerName === CategoryExisted.name || id === CategoryExisted.id) {
-            console.log("TAMO TCHUGUERA");
-
+        if (!CategoryExisted) {
+            throw new Error("Category not created!")
         }
 
-        if (CategoryExisted) {
-            const category = await prismaClient.category.update({
-                where: {
-                    id: CategoryExisted.id
-                },
-                data: {
-                    status: false
-                }
-            })
+        const category = await prismaClient.category.update({
+            where: {
+                id: CategoryExisted.id,
+            },
+            data: {
+                status: false
+            }
+        })
 
-            return category
-        }
+        return category
+        
     }
 }
 

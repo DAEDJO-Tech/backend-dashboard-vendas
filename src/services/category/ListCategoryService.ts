@@ -4,7 +4,7 @@ class ListCategoryService {
     async executeName(name: string, stock_id: string) {
 
         if (!name) {
-            throw new Error("Preencha os campos!")
+            throw new Error("Fill in the data!")
         }
 
         const category = await prismaClient.category.findFirst({
@@ -19,7 +19,7 @@ class ListCategoryService {
     async executeId(id: string) {
 
         if (!id) {
-            throw new Error("Preencha os campos!")
+            throw new Error("Fill in the data!")
         }
 
         const category = await prismaClient.category.findUnique({
@@ -33,7 +33,7 @@ class ListCategoryService {
     async executeStock(stock_id: string) {
 
         if (!stock_id) {
-            throw new Error("Preencha os campos!")
+            throw new Error("Fill in the data!")
         }
 
         const category = await prismaClient.category.findMany({
